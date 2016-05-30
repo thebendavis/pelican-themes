@@ -1,5 +1,52 @@
-{% extends "article_list.html" %}
+{% extends "base.html" %}
+{% set HIDE_SIDEBAR = True %}
+{% block content %}
 
+<div class="welcome-blurb well">
+  {{ WELCOME_BLURB }}
+</div>
+
+<h1>Projects</h1>
+    {% if articles %}
+        {% for article in articles|sort(attribute='date') %}
+          {% if article.category.name == "research" %}
+            {% include 'includes/article_summary.html' %}
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+<hr />
+
+<h1><a href="/blog/">Latest blog posts</a></h1>
+    {% if articles %}
+        {% for article in (articles_page.object_list if articles_page else articles) %}
+          {% if loop.index <= FRONT_PAGE_POSTS %}
+            {% include 'includes/article_summary.html' %}
+            <hr/>
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+
+<a href="/blog/" class="btn btn-primary btn-lg" role="button">More blog posts&hellip;</a>
+
+{% if FRONT_PAGE_CATEGORIES %}
+  <div class="row">
+    <h1>Popular Topics</h1>
+    {% for category, article_list in categories %}
+      {% if category in FRONT_PAGE_CATEGORIES %}
+      <div class="col-lg-3">
+        <h2>{{category}}</h2>
+        <ul class="list-unstyled">
+          {% for article in article_list %}
+            <li>{% include 'includes/article_title.html' %}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+     {% endfor %}
+  </div>
+{% endif %}
+
+{% endblock content %}
 {% block canonical_rel %}<link rel="canonical" href="{{ SITEURL }}">{% endblock %}
 
 {% block banner %}

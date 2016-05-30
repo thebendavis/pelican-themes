@@ -1,0 +1,7 @@
+{% include 'includes/article_permalink.html' %}
+
+{% if article.link %}
+<a class="article-link" href="{{ article.link }}">{{ article.title }} &rarrw;</a>
+{% else %}
+<a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+{% endif %}

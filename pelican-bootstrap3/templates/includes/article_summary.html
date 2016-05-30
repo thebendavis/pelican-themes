@@ -1,0 +1,14 @@
+<article {% if article.link %}class="link"{% endif %}>
+  <h2>
+    {% include 'includes/article_title.html' %}
+  </h2>
+  {% if DISPLAY_ARTICLE_INFO_ON_INDEX %}
+  <div class="well well-sm">
+    {% include 'includes/article_info.html' %}
+  </div>
+  {% endif %}
+  <div class="summary">{{ article.summary }}
+    {% include 'includes/comment_count.html' %}
+    <a class="btn btn-default btn-xs" href="{{ SITEURL }}/{{ article.url }}">more &hellip;</a>
+  </div>
+</article>
